@@ -21,7 +21,7 @@ public class SettingsConversion : Object {
 
     public void convert() {
         var settings = this.settingscache.generalsettings();
-        if (settings.get_value("settings-version").get_uint32() == 3) {
+        if (settings.get_value("settings-version").get_uint32() == 4) {
             return;
         }
         if (new Settings.with_path("de.mh21.indicator-multiload.version2.general",
@@ -31,7 +31,13 @@ public class SettingsConversion : Object {
         } else {
             this.convert_version1();
         }
-        settings.set_value("settings-version", 3u);
+        settings.set_value("settings-version", 4u);
+
+        var graphs = settings.get_strv("graphs");
+        if (!("gpu" in graphs)) {
+            graphs += "gpu";
+            settings.set_strv("graphs", graphs);
+        }
     }
 
     private void convert_version1() {
@@ -170,4 +176,3 @@ public class SettingsConversion : Object {
         }
     }
 }
-

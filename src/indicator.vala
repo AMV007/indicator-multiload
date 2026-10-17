@@ -81,7 +81,7 @@ public class Indicator : Object {
         this.indicatorview.scroll_event.connect(this.scrollhandler);
     }
 
-    ~MultiLoadIndicator() {
+    ~Indicator() {
         FileUtils.remove(this.iconpath(0));
         FileUtils.remove(this.iconpath(1));
         DirUtils.remove(this.icondirectory);
@@ -254,4 +254,3 @@ public class Indicator : Object {
         surface.write_to_png(this.iconpath(this.currenticonindex));
     }
 }
-

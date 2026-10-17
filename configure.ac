@@ -21,7 +21,12 @@ AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [gettext package name])
 
 GLIB_GSETTINGS
 
-PKG_CHECK_MODULES(MULTILOADDEPS, [gtk+-3.0 >= 3.4 cairo appindicator3-0.1 glib-2.0 gio-unix-2.0 gmodule-2.0 libgtop-2.0])
+PKG_CHECK_MODULES(MULTILOADDEPS, [gtk+-3.0 >= 3.4 cairo glib-2.0 gio-unix-2.0 gmodule-2.0 libgtop-2.0])
+PKG_CHECK_MODULES([APPINDICATORDEPS], [appindicator3-0.1],
+	[APPINDICATOR_PKG=appindicator3-0.1],
+	[PKG_CHECK_MODULES([APPINDICATORDEPS], [ayatana-appindicator3-0.1])
+	 APPINDICATOR_PKG=ayatana-appindicator3-0.1])
+AC_SUBST(APPINDICATOR_PKG)
 
 AC_CONFIG_FILES([
 Makefile

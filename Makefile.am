@@ -6,6 +6,7 @@ AM_CPPFLAGS = \
 	-DPACKAGE_LOCALE_DIR=\""$(localedir)"\" \
 	-DPACKAGE_DATA_DIR=\""$(pkgdatadir)"\" \
 	$(MULTILOADDEPS_CFLAGS) \
+	$(APPINDICATORDEPS_CFLAGS) \
 	-include $(CONFIG_HEADER)
 
 AM_CFLAGS = -Wall \
@@ -18,7 +19,7 @@ VALAFLAGS =  \
 	--pkg=posix \
 	--pkg=gtk+-3.0 \
 	--pkg=cairo \
-	--pkg=appindicator3-0.1 \
+	--pkg=$(APPINDICATOR_PKG) \
 	--pkg=glib-2.0 \
 	--pkg=gio-unix-2.0 \
 	--pkg=gmodule-2.0 \
@@ -38,6 +39,7 @@ indicator_multiload_VALASOURCES = \
 	src/colormapper.vala \
 	src/cpufreqprovider.vala \
 	src/cpuprovider.vala \
+	src/gpuprovider.vala \
 	src/diskprovider.vala \
 	src/expressionparser.vala \
 	src/function.vala \
@@ -72,7 +74,7 @@ indicator_multiload_SOURCES = \
 indicator_multiload_LDFLAGS = \
 	-Wl,--export-dynamic -Wl,--as-needed
 
-indicator_multiload_LDADD = $(MULTILOADDEPS_LIBS) -lm
+indicator_multiload_LDADD = $(MULTILOADDEPS_LIBS) $(APPINDICATORDEPS_LIBS) -lm
 
 # documentation
 

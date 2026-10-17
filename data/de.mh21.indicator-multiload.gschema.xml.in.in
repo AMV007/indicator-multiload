@@ -11,6 +11,7 @@
         <child name="swap" schema="de.mh21.indicator-multiload.graphs.swap" />
         <child name="load" schema="de.mh21.indicator-multiload.graphs.load" />
         <child name="disk" schema="de.mh21.indicator-multiload.graphs.disk" />
+        <child name="gpu" schema="de.mh21.indicator-multiload.graphs.gpu" />
 
         <child name="custom1" schema="de.mh21.indicator-multiload.graph" />
         <child name="custom2" schema="de.mh21.indicator-multiload.graph" />
@@ -25,7 +26,7 @@
 
     <schema id="de.mh21.indicator-multiload.general" path="/de/mh21/indicator-multiload/general/" gettext-domain="@GETTEXT_PACKAGE@">
         <key name="graphs" type="as">
-            <default>[ "cpu", "mem", "net", "swap", "load", "disk" ]</default>
+            <default>[ "cpu", "mem", "net", "swap", "load", "disk", "gpu" ]</default>
             <_summary>Available graphs</_summary>
         </key>
 
@@ -67,7 +68,7 @@
         <key name="description-expressions" type="as">
             <!-- TRANSLATORS: This is a list of translatable strings. Do not translate anything inside of $(...), and make sure to keep any brackets, quotes, and commas. -->
             <_default l10n="messages">[
-                "CPU $(percent(cpu.inuse)) Mem $(size(mem.user)) Net down $(speed(net.down)) up $(speed(net.up)) Swap $(size(swap.used)) Load $(decimals(load.avg,2)) Disk read $(speed(disk.read)) write $(speed(disk.write))"
+                "CPU $(percent(cpu.inuse)) GPU $(percent(gpu.load)) Mem $(size(mem.user)) Net down $(speed(net.down)) up $(speed(net.up)) Swap $(size(swap.used)) Load $(decimals(load.avg,2)) Disk read $(speed(disk.read)) write $(speed(disk.write))"
             ]</_default>
             <_summary>Information in the accessible description of the indicator</_summary>
         </key>
@@ -81,7 +82,8 @@
                 "Net $(speed(net.down))/$(speed(net.up))",
                 "Swap $(size(swap.used))",
                 "Load $(decimals(load.avg,2))",
-                "Disk $(speed(disk.read))/$(speed(disk.write))"
+                "Disk $(speed(disk.read))/$(speed(disk.write))",
+                "GPU $(percent(gpu.load))"
             ]</_default>
             <_summary>Information shown in the indicator itself</_summary>
         </key>
@@ -99,7 +101,8 @@
                 "Net: down $(speed(net.down)), up $(speed(net.up))",
                 "Swap: $(size(swap.used))",
                 "Load: $(decimals(load.avg,2))",
-                "Disk: read $(speed(disk.read)), write $(speed(disk.write))"
+                "Disk: read $(speed(disk.read)), write $(speed(disk.write))",
+                "GPU: $(percent(gpu.load))"
             ]</_default>
             <_summary>Information shown as menu entries</_summary>
         </key>
@@ -162,6 +165,21 @@
             <default>true</default>
             <_summary>Trace visibility</_summary>
         </key>
+    </schema>
+
+    <schema id="de.mh21.indicator-multiload.graphs.gpu" path="/de/mh21/indicator-multiload/graphs/gpu/" gettext-domain="@GETTEXT_PACKAGE@">
+        <key name="enabled" type="b"><default>true</default><_summary>Graph visibility</_summary></key>
+        <key name="minimum" type="s"><default>"1"</default><_summary>Minimum value for upper graph edge</_summary></key>
+        <key name="maximum" type="s"><default>"0"</default><_summary>Maximum value for upper graph edge, zero means unlimited</_summary></key>
+        <key name="smooth" type="s"><default>"1"</default><_summary>Number of values used for smooth graph scaling</_summary></key>
+        <key name="traces" type="as"><default>[ "gpu1" ]</default><_summary>Available traces</_summary></key>
+        <child name="gpu1" schema="de.mh21.indicator-multiload.traces.gpu1" />
+    </schema>
+
+    <schema id="de.mh21.indicator-multiload.traces.gpu1" path="/de/mh21/indicator-multiload/graphs/gpu/gpu1/" gettext-domain="@GETTEXT_PACKAGE@">
+        <key name="color" type="s"><default>"ambiance:cpu1"</default><_summary>Trace color</_summary></key>
+        <key name="expression" type="s"><default>"$(gpu.load)"</default><_summary>Trace expression</_summary></key>
+        <key name="enabled" type="b"><default>true</default><_summary>Trace visibility</_summary></key>
     </schema>
 
     <schema id="de.mh21.indicator-multiload.graphs.cpu" path="/de/mh21/indicator-multiload/graphs/cpu/" gettext-domain="@GETTEXT_PACKAGE@">

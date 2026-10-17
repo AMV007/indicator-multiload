@@ -17,11 +17,15 @@
  ******************************************************************************/
 
 public class SettingsCache : Object {
+    private static void unref_object(void* data) {
+        ((GLib.Object)data).unref();
+    }
+
     public static const string[] presetgraphids = {
-        "cpu", "mem", "net", "load", "swap", "disk"
+        "cpu", "mem", "net", "load", "swap", "disk", "gpu"
     };
     private HashTable<string, Settings> cached = new HashTable<string, Settings>
-        .full(str_hash, str_equal, g_free, g_object_unref);
+        .full(str_hash, str_equal, g_free, unref_object);
 
     private Settings settings(string key, string? path) {
         var result = this.cached.lookup(key);

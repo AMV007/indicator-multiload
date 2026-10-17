@@ -31,12 +31,16 @@ class ColorScheme {
 }
 
 public class ColorMapper : Object {
+    private static void unref_object(void* data) {
+        ((GLib.Object)data).unref();
+    }
+
     public static const string[] colorschemes = {
         "traditional", "ambiance", "radiance", "xosview"
     };
 
     static HashTable<string, ColorScheme> schemes = new HashTable<string, ColorScheme>
-        .full(str_hash, str_equal, g_free, g_object_unref);
+        .full(str_hash, str_equal, g_free, unref_object);
 
     static const string[] colornames = {
         "cpu1",  "cpu2",  "cpu3",  "cpu4",
@@ -146,4 +150,3 @@ public class ColorMapper : Object {
         }
     }
 }
-

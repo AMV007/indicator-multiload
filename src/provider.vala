@@ -23,7 +23,7 @@ public abstract class Provider : GLib.Object {
 
     public double[] values { get; private set; }
 
-    public Provider(string id, string[] keys, string displaytypes) {
+    protected Provider(string id, string[] keys, string displaytypes) {
         Object(id: id, keys: keys, displaytypes: displaytypes);
     }
 

@@ -23,6 +23,7 @@ public class Providers : Object {
     construct {
         this.providers = {
             new CpuProvider(), new CpuFreqProvider(), new MemProvider(),
+            new GpuProvider(),
             new NetProvider(), new SwapProvider(), new LoadProvider(),
             new DiskProvider()
         };

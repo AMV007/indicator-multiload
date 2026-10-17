@@ -20,7 +20,7 @@ public abstract class Function : GLib.Object {
     public string id { get; construct; }
     public string[] parameterdescs { get; construct; }
 
-    public Function(string id, string[] parameterdescs) {
+    protected Function(string id, string[] parameterdescs) {
         Object(id: id, parameterdescs: parameterdescs);
     }
 

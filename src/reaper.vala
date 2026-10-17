@@ -18,13 +18,11 @@
 
 public class Reaper : Object {
     public string[] args { get; construct; }
-    public TimeoutSource timeout { get; construct; }
+    private TimeoutSource timeout;
 
     public Reaper(string[] args) {
-        Object(args: args, timeout: new TimeoutSource(60 * 1000));
-    }
-
-    construct {
+        Object(args: args);
+        this.timeout = new TimeoutSource(60 * 1000);
         this.timeout.attach(null);
         this.timeout.set_callback(() => {
             try {
